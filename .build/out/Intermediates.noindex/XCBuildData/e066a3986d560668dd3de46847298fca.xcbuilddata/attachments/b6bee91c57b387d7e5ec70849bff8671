@@ -1,0 +1,29 @@
+{
+  "" : {
+    "diagnostics" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCoreTests-p.build/Objects-normal/arm64/AgentSamCoreTests-primary.dia",
+    "emit-module-dependencies" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCoreTests-p.build/Objects-normal/arm64/AgentSamCoreTests-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCoreTests-p.build/Objects-normal/arm64/AgentSamCoreTests-primary-emit-module.dia",
+    "pch" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCoreTests-p.build/Objects-normal/arm64/AgentSamCoreTests-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCoreTests-p.build/Objects-normal/arm64/AgentSamCoreTests-primary.swiftdeps"
+  },
+  "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCoreTests-p.build/DerivedSources/test_entry_point.swift" : {
+    "const-values" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCoreTests-p.build/Objects-normal/arm64/test_entry_point.swiftconstvalues",
+    "dependencies" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCoreTests-p.build/Objects-normal/arm64/test_entry_point.d",
+    "diagnostics" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCoreTests-p.build/Objects-normal/arm64/test_entry_point.dia",
+    "index-unit-output-path" : "/AgentSamCore.build/Debug/AgentSamCoreTests-p.build/Objects-normal/arm64/test_entry_point.o",
+    "llvm-bc" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCoreTests-p.build/Objects-normal/arm64/test_entry_point.bc",
+    "object" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCoreTests-p.build/Objects-normal/arm64/test_entry_point.o",
+    "swift-dependencies" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCoreTests-p.build/Objects-normal/arm64/test_entry_point.swiftdeps",
+    "swiftmodule" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCoreTests-p.build/Objects-normal/arm64/test_entry_point~partial.swiftmodule"
+  },
+  "/Users/starla/Developer/AgentSam/AgentSamCore/Tests/AgentSamCoreTests/ConnectorPrimitiveTests.swift" : {
+    "const-values" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCoreTests-p.build/Objects-normal/arm64/ConnectorPrimitiveTests.swiftconstvalues",
+    "dependencies" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCoreTests-p.build/Objects-normal/arm64/ConnectorPrimitiveTests.d",
+    "diagnostics" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCoreTests-p.build/Objects-normal/arm64/ConnectorPrimitiveTests.dia",
+    "index-unit-output-path" : "/AgentSamCore.build/Debug/AgentSamCoreTests-p.build/Objects-normal/arm64/ConnectorPrimitiveTests.o",
+    "llvm-bc" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCoreTests-p.build/Objects-normal/arm64/ConnectorPrimitiveTests.bc",
+    "object" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCoreTests-p.build/Objects-normal/arm64/ConnectorPrimitiveTests.o",
+    "swift-dependencies" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCoreTests-p.build/Objects-normal/arm64/ConnectorPrimitiveTests.swiftdeps",
+    "swiftmodule" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCoreTests-p.build/Objects-normal/arm64/ConnectorPrimitiveTests~partial.swiftmodule"
+  }
+}

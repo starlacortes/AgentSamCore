@@ -1,0 +1,159 @@
+{
+  "" : {
+    "diagnostics" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/AgentSamCore-primary.dia",
+    "emit-module-dependencies" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/AgentSamCore-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/AgentSamCore-primary-emit-module.dia",
+    "pch" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/AgentSamCore-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/AgentSamCore-primary.swiftdeps"
+  },
+  "/Users/starla/Developer/AgentSam/AgentSamCore/Sources/AgentSamCore/AnthropicClient.swift" : {
+    "const-values" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/AnthropicClient.swiftconstvalues",
+    "dependencies" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/AnthropicClient.d",
+    "diagnostics" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/AnthropicClient.dia",
+    "index-unit-output-path" : "/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/AnthropicClient.o",
+    "llvm-bc" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/AnthropicClient.bc",
+    "object" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/AnthropicClient.o",
+    "swift-dependencies" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/AnthropicClient.swiftdeps",
+    "swiftmodule" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/AnthropicClient~partial.swiftmodule"
+  },
+  "/Users/starla/Developer/AgentSam/AgentSamCore/Sources/AgentSamCore/CloudflareConnector.swift" : {
+    "const-values" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/CloudflareConnector.swiftconstvalues",
+    "dependencies" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/CloudflareConnector.d",
+    "diagnostics" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/CloudflareConnector.dia",
+    "index-unit-output-path" : "/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/CloudflareConnector.o",
+    "llvm-bc" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/CloudflareConnector.bc",
+    "object" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/CloudflareConnector.o",
+    "swift-dependencies" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/CloudflareConnector.swiftdeps",
+    "swiftmodule" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/CloudflareConnector~partial.swiftmodule"
+  },
+  "/Users/starla/Developer/AgentSam/AgentSamCore/Sources/AgentSamCore/Connectors.swift" : {
+    "const-values" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Connectors.swiftconstvalues",
+    "dependencies" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Connectors.d",
+    "diagnostics" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Connectors.dia",
+    "index-unit-output-path" : "/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Connectors.o",
+    "llvm-bc" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Connectors.bc",
+    "object" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Connectors.o",
+    "swift-dependencies" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Connectors.swiftdeps",
+    "swiftmodule" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Connectors~partial.swiftmodule"
+  },
+  "/Users/starla/Developer/AgentSam/AgentSamCore/Sources/AgentSamCore/GmailConnector.swift" : {
+    "const-values" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/GmailConnector.swiftconstvalues",
+    "dependencies" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/GmailConnector.d",
+    "diagnostics" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/GmailConnector.dia",
+    "index-unit-output-path" : "/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/GmailConnector.o",
+    "llvm-bc" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/GmailConnector.bc",
+    "object" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/GmailConnector.o",
+    "swift-dependencies" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/GmailConnector.swiftdeps",
+    "swiftmodule" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/GmailConnector~partial.swiftmodule"
+  },
+  "/Users/starla/Developer/AgentSam/AgentSamCore/Sources/AgentSamCore/GoogleAdsConnector.swift" : {
+    "const-values" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/GoogleAdsConnector.swiftconstvalues",
+    "dependencies" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/GoogleAdsConnector.d",
+    "diagnostics" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/GoogleAdsConnector.dia",
+    "index-unit-output-path" : "/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/GoogleAdsConnector.o",
+    "llvm-bc" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/GoogleAdsConnector.bc",
+    "object" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/GoogleAdsConnector.o",
+    "swift-dependencies" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/GoogleAdsConnector.swiftdeps",
+    "swiftmodule" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/GoogleAdsConnector~partial.swiftmodule"
+  },
+  "/Users/starla/Developer/AgentSam/AgentSamCore/Sources/AgentSamCore/GoogleOAuth.swift" : {
+    "const-values" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/GoogleOAuth.swiftconstvalues",
+    "dependencies" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/GoogleOAuth.d",
+    "diagnostics" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/GoogleOAuth.dia",
+    "index-unit-output-path" : "/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/GoogleOAuth.o",
+    "llvm-bc" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/GoogleOAuth.bc",
+    "object" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/GoogleOAuth.o",
+    "swift-dependencies" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/GoogleOAuth.swiftdeps",
+    "swiftmodule" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/GoogleOAuth~partial.swiftmodule"
+  },
+  "/Users/starla/Developer/AgentSam/AgentSamCore/Sources/AgentSamCore/KeyRing.swift" : {
+    "const-values" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/KeyRing.swiftconstvalues",
+    "dependencies" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/KeyRing.d",
+    "diagnostics" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/KeyRing.dia",
+    "index-unit-output-path" : "/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/KeyRing.o",
+    "llvm-bc" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/KeyRing.bc",
+    "object" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/KeyRing.o",
+    "swift-dependencies" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/KeyRing.swiftdeps",
+    "swiftmodule" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/KeyRing~partial.swiftmodule"
+  },
+  "/Users/starla/Developer/AgentSam/AgentSamCore/Sources/AgentSamCore/LLMClient.swift" : {
+    "const-values" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/LLMClient.swiftconstvalues",
+    "dependencies" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/LLMClient.d",
+    "diagnostics" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/LLMClient.dia",
+    "index-unit-output-path" : "/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/LLMClient.o",
+    "llvm-bc" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/LLMClient.bc",
+    "object" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/LLMClient.o",
+    "swift-dependencies" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/LLMClient.swiftdeps",
+    "swiftmodule" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/LLMClient~partial.swiftmodule"
+  },
+  "/Users/starla/Developer/AgentSam/AgentSamCore/Sources/AgentSamCore/MissionEngine.swift" : {
+    "const-values" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/MissionEngine.swiftconstvalues",
+    "dependencies" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/MissionEngine.d",
+    "diagnostics" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/MissionEngine.dia",
+    "index-unit-output-path" : "/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/MissionEngine.o",
+    "llvm-bc" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/MissionEngine.bc",
+    "object" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/MissionEngine.o",
+    "swift-dependencies" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/MissionEngine.swiftdeps",
+    "swiftmodule" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/MissionEngine~partial.swiftmodule"
+  },
+  "/Users/starla/Developer/AgentSam/AgentSamCore/Sources/AgentSamCore/MissionStore.swift" : {
+    "const-values" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/MissionStore.swiftconstvalues",
+    "dependencies" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/MissionStore.d",
+    "diagnostics" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/MissionStore.dia",
+    "index-unit-output-path" : "/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/MissionStore.o",
+    "llvm-bc" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/MissionStore.bc",
+    "object" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/MissionStore.o",
+    "swift-dependencies" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/MissionStore.swiftdeps",
+    "swiftmodule" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/MissionStore~partial.swiftmodule"
+  },
+  "/Users/starla/Developer/AgentSam/AgentSamCore/Sources/AgentSamCore/Models.swift" : {
+    "const-values" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Models.swiftconstvalues",
+    "dependencies" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Models.d",
+    "diagnostics" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Models.dia",
+    "index-unit-output-path" : "/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Models.o",
+    "llvm-bc" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Models.bc",
+    "object" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Models.o",
+    "swift-dependencies" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Models.swiftdeps",
+    "swiftmodule" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Models~partial.swiftmodule"
+  },
+  "/Users/starla/Developer/AgentSam/AgentSamCore/Sources/AgentSamCore/Parsers.swift" : {
+    "const-values" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Parsers.swiftconstvalues",
+    "dependencies" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Parsers.d",
+    "diagnostics" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Parsers.dia",
+    "index-unit-output-path" : "/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Parsers.o",
+    "llvm-bc" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Parsers.bc",
+    "object" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Parsers.o",
+    "swift-dependencies" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Parsers.swiftdeps",
+    "swiftmodule" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Parsers~partial.swiftmodule"
+  },
+  "/Users/starla/Developer/AgentSam/AgentSamCore/Sources/AgentSamCore/PromptBuilder.swift" : {
+    "const-values" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/PromptBuilder.swiftconstvalues",
+    "dependencies" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/PromptBuilder.d",
+    "diagnostics" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/PromptBuilder.dia",
+    "index-unit-output-path" : "/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/PromptBuilder.o",
+    "llvm-bc" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/PromptBuilder.bc",
+    "object" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/PromptBuilder.o",
+    "swift-dependencies" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/PromptBuilder.swiftdeps",
+    "swiftmodule" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/PromptBuilder~partial.swiftmodule"
+  },
+  "/Users/starla/Developer/AgentSam/AgentSamCore/Sources/AgentSamCore/Tools.swift" : {
+    "const-values" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Tools.swiftconstvalues",
+    "dependencies" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Tools.d",
+    "diagnostics" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Tools.dia",
+    "index-unit-output-path" : "/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Tools.o",
+    "llvm-bc" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Tools.bc",
+    "object" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Tools.o",
+    "swift-dependencies" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Tools.swiftdeps",
+    "swiftmodule" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Tools~partial.swiftmodule"
+  },
+  "/Users/starla/Developer/AgentSam/AgentSamCore/Sources/AgentSamCore/Wire.swift" : {
+    "const-values" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Wire.swiftconstvalues",
+    "dependencies" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Wire.d",
+    "diagnostics" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Wire.dia",
+    "index-unit-output-path" : "/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Wire.o",
+    "llvm-bc" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Wire.bc",
+    "object" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Wire.o",
+    "swift-dependencies" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Wire.swiftdeps",
+    "swiftmodule" : "/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/Objects-normal/arm64/Wire~partial.swiftmodule"
+  }
+}

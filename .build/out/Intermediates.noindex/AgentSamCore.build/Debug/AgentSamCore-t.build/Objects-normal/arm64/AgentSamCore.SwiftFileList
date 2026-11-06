@@ -1,0 +1,17 @@
+/Users/starla/Developer/AgentSam/AgentSamCore/.build/out/Intermediates.noindex/AgentSamCore.build/Debug/AgentSamCore-t.build/DerivedSources/resource_bundle_accessor.swift
+/Users/starla/Developer/AgentSam/AgentSamCore/Sources/AgentSamCore/AnthropicClient.swift
+/Users/starla/Developer/AgentSam/AgentSamCore/Sources/AgentSamCore/CloudflareConnector.swift
+/Users/starla/Developer/AgentSam/AgentSamCore/Sources/AgentSamCore/Connectors.swift
+/Users/starla/Developer/AgentSam/AgentSamCore/Sources/AgentSamCore/CoreL10n.swift
+/Users/starla/Developer/AgentSam/AgentSamCore/Sources/AgentSamCore/GmailConnector.swift
+/Users/starla/Developer/AgentSam/AgentSamCore/Sources/AgentSamCore/GoogleAdsConnector.swift
+/Users/starla/Developer/AgentSam/AgentSamCore/Sources/AgentSamCore/GoogleOAuth.swift
+/Users/starla/Developer/AgentSam/AgentSamCore/Sources/AgentSamCore/KeyRing.swift
+/Users/starla/Developer/AgentSam/AgentSamCore/Sources/AgentSamCore/LLMClient.swift
+/Users/starla/Developer/AgentSam/AgentSamCore/Sources/AgentSamCore/MissionEngine.swift
+/Users/starla/Developer/AgentSam/AgentSamCore/Sources/AgentSamCore/MissionStore.swift
+/Users/starla/Developer/AgentSam/AgentSamCore/Sources/AgentSamCore/Models.swift
+/Users/starla/Developer/AgentSam/AgentSamCore/Sources/AgentSamCore/Parsers.swift
+/Users/starla/Developer/AgentSam/AgentSamCore/Sources/AgentSamCore/PromptBuilder.swift
+/Users/starla/Developer/AgentSam/AgentSamCore/Sources/AgentSamCore/Tools.swift
+/Users/starla/Developer/AgentSam/AgentSamCore/Sources/AgentSamCore/Wire.swift

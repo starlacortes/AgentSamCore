@@ -1,0 +1,11 @@
+Target dependency graph (4 targets)
+Target 'AllExcludingTests' in project 'Aggregate'
+➜ Explicit dependency on target 'AgentSamCore-product' in project 'AgentSamCore'
+➜ Explicit dependency on target 'AgentSamCore' in project 'AgentSamCore'
+➜ Explicit dependency on target 'AgentSamCore_AgentSamCore' in project 'AgentSamCore'
+Target 'AgentSamCore-product' in project 'AgentSamCore'
+➜ Explicit dependency on target 'AgentSamCore' in project 'AgentSamCore'
+➜ Explicit dependency on target 'AgentSamCore_AgentSamCore' in project 'AgentSamCore'
+Target 'AgentSamCore' in project 'AgentSamCore'
+➜ Explicit dependency on target 'AgentSamCore_AgentSamCore' in project 'AgentSamCore'
+Target 'AgentSamCore_AgentSamCore' in project 'AgentSamCore' (no dependencies)

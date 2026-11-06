@@ -1,0 +1,4 @@
+module AgentSamCore {
+header "AgentSamCore-Swift.h"
+export *
+}
