@@ -9,6 +9,7 @@ public enum ConnectorID: String, Codable, CaseIterable, Hashable, Sendable {
     case gmail
     case googleads
     case cloudflare
+    case github
     case web
 
     public var displayName: String {
@@ -16,6 +17,7 @@ public enum ConnectorID: String, Codable, CaseIterable, Hashable, Sendable {
         case .gmail: "Gmail"
         case .googleads: "Google Ads"
         case .cloudflare: "Cloudflare"
+        case .github: "GitHub"
         case .web: "Web"
         }
     }
@@ -25,6 +27,7 @@ public enum ConnectorID: String, Codable, CaseIterable, Hashable, Sendable {
         case .gmail: "Search, read, draft, and optionally send email through your Gmail account."
         case .googleads: "Run read-only GAQL queries against your Google Ads accounts."
         case .cloudflare: "Inspect Cloudflare zones and DNS, with optional write access."
+        case .github: "Read repositories, code, issues, and pull requests on GitHub, with optional write access to a branch."
         case .web: "Read public web pages, and search the web with a Brave Search key."
         }
     }
@@ -33,11 +36,13 @@ public enum ConnectorID: String, Codable, CaseIterable, Hashable, Sendable {
     public var credentialAccounts: [String] {
         switch self {
         case .cloudflare: [CloudflareConnector.tokenAccount]
+        case .github: [GitHubConnector.tokenAccount]
         case .web: [WebConnector.braveKeyAccount]
         case .gmail: [GoogleTokenProvider.refreshAccount(for: self), GoogleTokenProvider.cacheAccount(for: self)]
         case .googleads: [
             GoogleTokenProvider.refreshAccount(for: self),
             GoogleTokenProvider.cacheAccount(for: self),
+            GoogleTokenProvider.serviceAccountAccount(for: self),
             GoogleAdsConnector.developerTokenAccount,
             GoogleAdsConnector.customerIdAccount,
         ]
@@ -52,11 +57,23 @@ public struct ConnectorPermissions: Codable, Hashable, Sendable {
     public var createDraft: Bool
     /// Cloudflare: allow DNS create/update/delete and cache purge tools.
     public var dnsWrite: Bool
+    /// GitHub: allow committing files to a non-default branch and commenting on issues/PRs.
+    public var githubWrite: Bool
 
-    public init(sendEmail: Bool = false, createDraft: Bool = false, dnsWrite: Bool = false) {
+    public init(sendEmail: Bool = false, createDraft: Bool = false, dnsWrite: Bool = false, githubWrite: Bool = false) {
         self.sendEmail = sendEmail
         self.createDraft = createDraft
         self.dnsWrite = dnsWrite
+        self.githubWrite = githubWrite
+    }
+
+    // Hand-written so configs saved before `githubWrite` existed still load.
+    public init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        sendEmail = try c.decodeIfPresent(Bool.self, forKey: .sendEmail) ?? false
+        createDraft = try c.decodeIfPresent(Bool.self, forKey: .createDraft) ?? false
+        dnsWrite = try c.decodeIfPresent(Bool.self, forKey: .dnsWrite) ?? false
+        githubWrite = try c.decodeIfPresent(Bool.self, forKey: .githubWrite) ?? false
     }
 }
 
@@ -116,9 +133,27 @@ public enum ConnectorHTTP {
         let (data, response) = try await session.data(for: request)
         let status = (response as? HTTPURLResponse)?.statusCode ?? 0
         guard (200..<300).contains(status) else {
-            throw ConnectorError("HTTP \(status): \(snippet(data))")
+            throw ConnectorError("HTTP \(status): \(googleErrorSummary(data) ?? snippet(data))")
         }
         return data
+    }
+
+    /// Google APIs nest the useful part (e.g. Google Ads `requestError: PAGE_SIZE_NOT_SUPPORTED`)
+    /// deep in `error.details[].errors[]`, past where a raw snippet gets cut off. Pull it out.
+    static func googleErrorSummary(_ data: Data) -> String? {
+        guard let object = (try? JSONSerialization.jsonObject(with: data)) as? [String: Any],
+              let error = object["error"] as? [String: Any] else { return nil }
+        var parts: [String] = []
+        if let status = error["status"] as? String { parts.append(status) }
+        for detail in error["details"] as? [[String: Any]] ?? [] {
+            for item in detail["errors"] as? [[String: Any]] ?? [] {
+                let code = (item["errorCode"] as? [String: Any])?.map { "\($0.key): \($0.value)" }.joined(separator: ", ")
+                let message = item["message"] as? String
+                parts.append([code, message].compactMap { $0 }.joined(separator: " — "))
+            }
+        }
+        if parts.count <= 1, let message = error["message"] as? String { parts.append(message) }
+        return parts.isEmpty ? nil : parts.joined(separator: "; ")
     }
 
     public static func jsonObject(_ data: Data) throws -> [String: Any] {
@@ -182,6 +217,8 @@ public struct ConnectorRuntime: Sendable {
 
 /// Central registry used by the engine (and by the apps/server to manage connectors).
 public struct ConnectorHub: Sendable {
+    public typealias WriteApproval = @Sendable (APIToolCall) async -> String
+
     public let store: MissionStore
     public let keyRing: KeyRing
     public let session: URLSession
@@ -189,6 +226,7 @@ public struct ConnectorHub: Sendable {
 
     public static let providers: [any ConnectorToolProvider] = [
         CloudflareConnector(),
+        GitHubConnector(),
         GmailConnector(),
         GoogleAdsConnector(),
         WebConnector(),
@@ -262,6 +300,7 @@ public struct ConnectorHub: Sendable {
         "gmail_search", "gmail_read",
         "googleads_accounts", "googleads_campaigns", "googleads_query",
         "cloudflare_zones", "cloudflare_dns_list",
+        "github_repos", "github_read", "github_search", "github_issues", "github_issue",
         "web_fetch", "web_search",
     ]
 
@@ -276,6 +315,7 @@ public struct ConnectorHub: Sendable {
                 permissions.sendEmail = permissions.sendEmail && scope.permissions.sendEmail
                 permissions.createDraft = permissions.createDraft && scope.permissions.createDraft
                 permissions.dnsWrite = permissions.dnsWrite && scope.permissions.dnsWrite
+                permissions.githubWrite = permissions.githubWrite && scope.permissions.githubWrite
             }
             if let web = provider as? WebConnector {
                 defs += web.toolDefs(keyRing: keyRing).filter { !readOnly || Self.readOnlyToolNames.contains($0.function.name) }
@@ -286,28 +326,34 @@ public struct ConnectorHub: Sendable {
         return defs
     }
 
-    public func run(call: APIToolCall, scope: ToolScope? = nil, readOnly: Bool = false) async -> ToolOutcome {
+    public func run(call: APIToolCall, scope: ToolScope? = nil, readOnly: Bool = false, approval: WriteApproval? = nil, approved: Bool = false) async -> ToolOutcome {
         guard let provider = Self.providers.first(where: { $0.owns(call.function.name) }) else {
-            return ToolOutcome(resultText: "Unknown tool: \(call.function.name).")
+            return .failure("Unknown tool: \(call.function.name).")
         }
         guard !readOnly || Self.readOnlyToolNames.contains(call.function.name) else {
-            return ToolOutcome(resultText: "Ada only has read-only connector access in this conversation.")
+            return .failure("Ada only has read-only connector access in this conversation.")
         }
         if let scope, !scope.connectorIDs.contains(provider.id) {
-            return ToolOutcome(resultText: "This team does not have access to \(provider.id.displayName).")
+            return .failure("This team does not have access to \(provider.id.displayName).")
         }
         let config = await config(for: provider.id)
         guard config.enabled else {
-            return ToolOutcome(resultText: "The \(provider.id.displayName) connector is disabled. Enable it in Connections.")
+            return .failure("The \(provider.id.displayName) connector is disabled. Enable it in Connections.")
         }
         guard provider.isConfigured(keyRing: keyRing) else {
-            return ToolOutcome(resultText: "The \(provider.id.displayName) connector is not connected. Connect it in Connections.")
+            return .failure("The \(provider.id.displayName) connector is not connected. Connect it in Connections.")
         }
         var permissions = config.permissions
         if let scope {
             permissions.sendEmail = permissions.sendEmail && scope.permissions.sendEmail
             permissions.createDraft = permissions.createDraft && scope.permissions.createDraft
             permissions.dnsWrite = permissions.dnsWrite && scope.permissions.dnsWrite
+            permissions.githubWrite = permissions.githubWrite && scope.permissions.githubWrite
+        }
+        if !readOnly && !Self.readOnlyToolNames.contains(call.function.name) && !approved {
+            guard let approval else { return .failure("Connector writes require an explicit user approval.") }
+            let decision = await approval(call)
+            guard decision.hasPrefix("approved:") else { return .failure(decision) }
         }
         let args = AgentTools.arguments(of: call)
         return await provider.run(call.function.name, args: args, permissions: permissions, runtime: runtime)

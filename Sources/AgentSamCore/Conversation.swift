@@ -11,7 +11,27 @@ public enum ConversationMessageStatus: String, Codable, Sendable {
     case failed
 }
 
+public struct MessageStep: Codable, Identifiable, Hashable, Sendable {
+    public var id: UUID
+    public var label: String
+    /// `working`, `done`, or `failed`.
+    public var state: String
+    public var startedAt: Date
+    public var finishedAt: Date?
+
+    public init(id: UUID = UUID(), label: String, state: String = "working", startedAt: Date = Date(), finishedAt: Date? = nil) {
+        self.id = id
+        self.label = label
+        self.state = state
+        self.startedAt = startedAt
+        self.finishedAt = finishedAt
+    }
+}
+
 public struct ConversationMessage: Codable, Identifiable, Hashable, Sendable {
+    public static let maxQuickReplies = 4
+    public static let maxQuickReplyLength = 80
+
     public var id: UUID
     public var role: ConversationRole
     public var text: String
@@ -21,6 +41,15 @@ public struct ConversationMessage: Codable, Identifiable, Hashable, Sendable {
     public var teamIDs: [UUID]
     public var proposal: TeamProposal?
     public var activity: [AgentActivity]
+    /// Visible progress steps (routing, connector reads, team work), shown while Ada works and afterwards on request.
+    public var steps: [MessageStep]
+    /// Short replies the user can send with one click: clarifying options or suggested follow-ups.
+    public var quickReplies: [String]
+    /// Files Ada wrote with the chat workspace tools during this reply, listed in the message.
+    public var fileIDs: [String]
+    /// True when the platform sent this message from the conversation's schedule, not the user.
+    public var scheduled: Bool
+    public var completedAt: Date?
 
     public init(
         id: UUID = UUID(),
@@ -31,7 +60,12 @@ public struct ConversationMessage: Codable, Identifiable, Hashable, Sendable {
         missionIDs: [UUID] = [],
         teamIDs: [UUID] = [],
         proposal: TeamProposal? = nil,
-        activity: [AgentActivity] = []
+        activity: [AgentActivity] = [],
+        steps: [MessageStep] = [],
+        quickReplies: [String] = [],
+        fileIDs: [String] = [],
+        scheduled: Bool = false,
+        completedAt: Date? = nil
     ) {
         self.id = id
         self.role = role
@@ -42,6 +76,47 @@ public struct ConversationMessage: Codable, Identifiable, Hashable, Sendable {
         self.teamIDs = teamIDs
         self.proposal = proposal
         self.activity = activity
+        self.steps = steps
+        self.quickReplies = quickReplies
+        self.fileIDs = fileIDs
+        self.scheduled = scheduled
+        self.completedAt = completedAt
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case id, role, text, createdAt, status, missionIDs, teamIDs, proposal, activity, steps, quickReplies, fileIDs, scheduled, completedAt
+    }
+
+    /// Older conversations on disk predate `steps`, `quickReplies`, and `completedAt`.
+    public init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        id = try c.decode(UUID.self, forKey: .id)
+        role = try c.decode(ConversationRole.self, forKey: .role)
+        text = try c.decode(String.self, forKey: .text)
+        createdAt = try c.decode(Date.self, forKey: .createdAt)
+        status = try c.decode(ConversationMessageStatus.self, forKey: .status)
+        missionIDs = try c.decodeIfPresent([UUID].self, forKey: .missionIDs) ?? []
+        teamIDs = try c.decodeIfPresent([UUID].self, forKey: .teamIDs) ?? []
+        proposal = try c.decodeIfPresent(TeamProposal.self, forKey: .proposal)
+        activity = try c.decodeIfPresent([AgentActivity].self, forKey: .activity) ?? []
+        steps = try c.decodeIfPresent([MessageStep].self, forKey: .steps) ?? []
+        quickReplies = try c.decodeIfPresent([String].self, forKey: .quickReplies) ?? []
+        fileIDs = try c.decodeIfPresent([String].self, forKey: .fileIDs) ?? []
+        scheduled = try c.decodeIfPresent(Bool.self, forKey: .scheduled) ?? false
+        completedAt = try c.decodeIfPresent(Date.self, forKey: .completedAt)
+    }
+
+    /// Trims, de-duplicates, and caps quick replies so model output can't flood the UI.
+    public static func cleanQuickReplies(_ replies: [String]) -> [String] {
+        var seen = Set<String>()
+        var result: [String] = []
+        for raw in replies {
+            let clean = raw.replacingOccurrences(of: "\\s+", with: " ", options: .regularExpression).trimmingCharacters(in: .whitespacesAndNewlines)
+            guard !clean.isEmpty, clean.count <= maxQuickReplyLength, seen.insert(clean.lowercased()).inserted else { continue }
+            result.append(clean)
+            if result.count == maxQuickReplies { break }
+        }
+        return result
     }
 }
 
@@ -105,6 +180,51 @@ public struct TeamProposal: Codable, Identifiable, Hashable, Sendable {
     }
 }
 
+/// A recurring prompt the platform sends for the user: when set, the server fires `prompt`
+/// into the conversation every `intervalMinutes` and Ada runs it with her normal tools. This is
+/// how "update this every hour without me asking" works — Ada cannot wake herself, but the
+/// scheduler can wake her.
+public struct ConversationSchedule: Codable, Hashable, Sendable {
+    public static let allowedIntervals: [Int] = [15, 30, 60, 360, 720, 1440]
+
+    public var prompt: String
+    public var intervalMinutes: Int
+    /// The language Ada answers in when the schedule fires (`en` or `es`).
+    public var language: String
+    public var createdAt: Date
+    public var lastRunAt: Date?
+    public var nextRunAt: Date
+
+    public init(prompt: String, intervalMinutes: Int, language: String = "en", createdAt: Date = Date(), lastRunAt: Date? = nil, nextRunAt: Date? = nil) {
+        self.prompt = prompt
+        self.intervalMinutes = intervalMinutes
+        self.language = language.lowercased().hasPrefix("es") ? "es" : "en"
+        self.createdAt = createdAt
+        self.lastRunAt = lastRunAt
+        self.nextRunAt = nextRunAt ?? Date().addingTimeInterval(TimeInterval(intervalMinutes) * 60)
+    }
+
+    /// Normalizes model or client input into a valid schedule, or explains why it can't be.
+    public static func validate(prompt: String, intervalMinutes: Int, language: String = "en") -> ConversationSchedule? {
+        let clean = prompt.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !clean.isEmpty, clean.count <= 4_000 else { return nil }
+        guard allowedIntervals.contains(intervalMinutes) else { return nil }
+        return ConversationSchedule(prompt: clean, intervalMinutes: intervalMinutes, language: language)
+    }
+
+    /// The human interval label shown in the chat and UI.
+    public var intervalLabel: String {
+        switch intervalMinutes {
+        case 1440: "daily"
+        case 720: "every 12 hours"
+        case 360: "every 6 hours"
+        case 60: "hourly"
+        case 30: "every 30 minutes"
+        default: "every 15 minutes"
+        }
+    }
+}
+
 public struct Conversation: Codable, Identifiable, Hashable, Sendable {
     public var id: UUID
     public var ownerID: String
@@ -113,8 +233,9 @@ public struct Conversation: Codable, Identifiable, Hashable, Sendable {
     public var createdAt: Date
     public var updatedAt: Date
     public var messages: [ConversationMessage]
+    public var schedule: ConversationSchedule?
 
-    public init(id: UUID = UUID(), ownerID: String, title: String = "New conversation", projectName: String = "Personal", createdAt: Date = Date(), updatedAt: Date = Date(), messages: [ConversationMessage] = []) {
+    public init(id: UUID = UUID(), ownerID: String, title: String = "New conversation", projectName: String = "Personal", createdAt: Date = Date(), updatedAt: Date = Date(), messages: [ConversationMessage] = [], schedule: ConversationSchedule? = nil) {
         self.id = id
         self.ownerID = ownerID
         self.title = title
@@ -122,10 +243,28 @@ public struct Conversation: Codable, Identifiable, Hashable, Sendable {
         self.createdAt = createdAt
         self.updatedAt = updatedAt
         self.messages = messages
+        self.schedule = schedule
     }
 
     public var summary: ConversationSummary {
         ConversationSummary(id: id, title: title, projectName: projectName, updatedAt: updatedAt, running: messages.contains { $0.status == .running })
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case id, ownerID, title, projectName, createdAt, updatedAt, messages, schedule
+    }
+
+    /// Older conversations on disk predate `schedule`.
+    public init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        id = try c.decode(UUID.self, forKey: .id)
+        ownerID = try c.decode(String.self, forKey: .ownerID)
+        title = try c.decode(String.self, forKey: .title)
+        projectName = try c.decode(String.self, forKey: .projectName)
+        createdAt = try c.decode(Date.self, forKey: .createdAt)
+        updatedAt = try c.decode(Date.self, forKey: .updatedAt)
+        messages = try c.decodeIfPresent([ConversationMessage].self, forKey: .messages) ?? []
+        schedule = try c.decodeIfPresent(ConversationSchedule.self, forKey: .schedule)
     }
 }
 
@@ -193,6 +332,7 @@ public struct GuideState: Codable, Hashable, Sendable {
 
 public enum ConversationRoute: String, Codable, Sendable {
     case direct = "DIRECT"
+    case solo = "SOLO"
     case routeTeam = "ROUTE_TEAM"
     case proposeTeam = "PROPOSE_TEAM"
     case clarify = "CLARIFY"
@@ -224,13 +364,16 @@ public struct ConversationDecision: Decodable, Sendable {
     public var teamIDs: [UUID]?
     public var rationale: String?
     public var proposal: TeamProposalDraft?
+    /// For CLARIFY: two to four short answers the user can pick with one click.
+    public var options: [String]?
 
-    public init(action: ConversationRoute, message: String? = nil, teamIDs: [UUID]? = nil, rationale: String? = nil, proposal: TeamProposalDraft? = nil) {
+    public init(action: ConversationRoute, message: String? = nil, teamIDs: [UUID]? = nil, rationale: String? = nil, proposal: TeamProposalDraft? = nil, options: [String]? = nil) {
         self.action = action
         self.message = message
         self.teamIDs = teamIDs
         self.rationale = rationale
         self.proposal = proposal
+        self.options = options
     }
 
     public static func parse(_ text: String) -> ConversationDecision? {

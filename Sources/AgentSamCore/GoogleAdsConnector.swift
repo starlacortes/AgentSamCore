@@ -6,7 +6,7 @@ import FoundationNetworking
 public struct GoogleAdsConnector: ConnectorToolProvider {
     public static let apiBase = "https://googleads.googleapis.com"
     /// Google retires each Ads API version about a year after release; override with AGENTSAM_GOOGLE_ADS_API_VERSION.
-    public static let apiVersion = ProcessInfo.processInfo.environment["AGENTSAM_GOOGLE_ADS_API_VERSION"].flatMap { $0.isEmpty ? nil : $0 } ?? "v25"
+    public static let apiVersion = ProcessInfo.processInfo.environment["AGENTSAM_GOOGLE_ADS_API_VERSION"].flatMap { $0.isEmpty ? nil : $0 } ?? "v26"
     public static let oauthScope = "https://www.googleapis.com/auth/adwords"
     public static let developerTokenAccount = "connector.googleads.developerToken"
     public static let customerIdAccount = "connector.googleads.customerId"
@@ -18,7 +18,9 @@ public struct GoogleAdsConnector: ConnectorToolProvider {
     public func isConfigured(keyRing: KeyRing) -> Bool {
         // Google sign-in is enough: API access is now granted to the Google Cloud project, and a
         // developer token is only sent when one was saved (older setups still use one).
+        // A service-account key works in place of sign-in.
         !(keyRing.get(GoogleTokenProvider.refreshAccount(for: .googleads)) ?? "").trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            || GoogleTokenProvider.serviceAccount(for: .googleads, keyRing: keyRing) != nil
     }
 
     // MARK: Tool definitions
@@ -67,35 +69,35 @@ public struct GoogleAdsConnector: ConnectorToolProvider {
         do {
             let provider = runtime.googleTokens(for: .googleads)
             guard let token = try await provider.accessToken() else {
-                return ToolOutcome(resultText: "Google Ads connector is not connected. Connect it in Settings.")
+                return .failure("Google Ads connector is not connected. Connect it in Settings.")
             }
             let context = try apiContext(token: token, runtime: runtime)
             switch name {
             case "googleads_accounts":
-                return ToolOutcome(resultText: try await listAccounts(context: context, runtime: runtime))
+                return ToolOutcome.success(try await listAccounts(context: context, runtime: runtime))
 
             case "googleads_campaigns":
                 let customerID = try resolveCustomerID(args["customer_id"]?.stringValue, context: context)
                 let query = "SELECT campaign.id, campaign.name, campaign.status, campaign.advertising_channel_type FROM campaign ORDER BY campaign.name LIMIT 200"
                 let text = try await search(customerID: customerID, query: query, pageToken: nil, context: context, runtime: runtime)
-                return ToolOutcome(resultText: text)
+                return ToolOutcome.success(text)
 
             case "googleads_query":
                 guard let query = args["query"]?.stringValue, !query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
-                    return ToolOutcome(resultText: "googleads_query requires a GAQL query string.")
+                    return .failure("googleads_query requires a GAQL query string.")
                 }
                 guard query.trimmingCharacters(in: .whitespacesAndNewlines).uppercased().hasPrefix("SELECT") else {
-                    return ToolOutcome(resultText: "Only read-only SELECT queries are supported.")
+                    return .failure("Only read-only SELECT queries are supported.")
                 }
                 let customerID = try resolveCustomerID(args["customer_id"]?.stringValue, context: context)
                 let text = try await search(customerID: customerID, query: query, pageToken: args["page_token"]?.stringValue, context: context, runtime: runtime)
-                return ToolOutcome(resultText: text)
+                return ToolOutcome.success(text)
 
             default:
-                return ToolOutcome(resultText: "Unknown tool: \(name).")
+                return .failure("Unknown tool: \(name).")
             }
         } catch {
-            return ToolOutcome(resultText: "Google Ads error: \(error.localizedDescription)")
+            return .failure("Google Ads error: \(error.localizedDescription)")
         }
     }
 
@@ -107,6 +109,13 @@ public struct GoogleAdsConnector: ConnectorToolProvider {
             }
             let context = try apiContext(token: token, runtime: runtime)
             let customers = try await listAccessibleCustomers(context: context, runtime: runtime)
+            // Also run a tiny GAQL search: listing accounts can succeed while queries are rejected.
+            let probe = context.loginCustomerID.isEmpty
+                ? customers.first?.replacingOccurrences(of: "customers/", with: "")
+                : context.loginCustomerID
+            if let probe {
+                _ = try await searchRaw(customerID: probe, query: "SELECT customer.id FROM customer LIMIT 1", pageToken: nil, context: context, runtime: runtime)
+            }
             return (true, "Connected — \(customers.count) customer account(s) accessible.")
         } catch {
             return (false, error.localizedDescription)
@@ -123,7 +132,9 @@ public struct GoogleAdsConnector: ConnectorToolProvider {
 
     private func apiContext(token: String, runtime: ConnectorRuntime) throws -> APIContext {
         let developerToken = runtime.keyRing.get(Self.developerTokenAccount)?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        let loginCustomerID = runtime.keyRing.get(Self.customerIdAccount)?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let loginCustomerID = (runtime.keyRing.get(Self.customerIdAccount) ?? "")
+            .replacingOccurrences(of: "-", with: "")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
         return APIContext(token: token, developerToken: developerToken, loginCustomerID: loginCustomerID)
     }
 
@@ -144,6 +155,7 @@ public struct GoogleAdsConnector: ConnectorToolProvider {
         let cleaned = (raw ?? context.loginCustomerID)
             .trimmingCharacters(in: .whitespacesAndNewlines)
             .replacingOccurrences(of: "customers/", with: "")
+            .replacingOccurrences(of: "-", with: "")
         guard !cleaned.isEmpty else {
             throw ConnectorError("Provide customer_id or configure a login customer ID for the Google Ads connector.")
         }
@@ -177,10 +189,11 @@ public struct GoogleAdsConnector: ConnectorToolProvider {
             } else {
                 for result in results.results {
                     let client = result["customerClient"] as? [String: Any]
-                    let id = client?["id"] as? NSNumber
+                    // REST returns int64 fields as strings.
+                    let id = (client?["id"] as? String) ?? (client?["id"] as? NSNumber)?.stringValue
                     let name = client?["descriptiveName"] as? String ?? "?"
                     let status = client?["status"] as? String ?? "?"
-                    lines.append("- \(id?.stringValue ?? "?") — \(name) (\(status))")
+                    lines.append("- \(id ?? "?") — \(name) (\(status))")
                 }
             }
         }
@@ -214,7 +227,8 @@ public struct GoogleAdsConnector: ConnectorToolProvider {
         guard let url = ConnectorHTTP.url(Self.apiBase, "/\(Self.apiVersion)/customers/\(customerID)/googleAds:search") else {
             throw ConnectorError("Bad Google Ads URL.")
         }
-        var body: [String: Any] = ["query": query, "pageSize": 500]
+        // No pageSize: the API rejects it (PAGE_SIZE_NOT_SUPPORTED); pages are a fixed 10,000 rows.
+        var body: [String: Any] = ["query": query]
         if let pageToken, !pageToken.isEmpty {
             body["pageToken"] = pageToken
         }
